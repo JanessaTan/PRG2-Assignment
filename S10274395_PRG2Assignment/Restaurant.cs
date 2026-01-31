@@ -18,9 +18,16 @@ namespace S10272516_PRG2Assignment
         private string restaurantName;
         private string restaurantEmail;
 
+
         public string RestaurantId { get; set; }
         public string RestaurantName { get; set; }
         public string RestaurantEmail { get; set; }
+
+        private List<Menu> menus = new List<Menu>();
+        public Queu<Order> OrderQueue { get; } = new Queue<Order>();
+
+        // implements (SpecialOffer)
+        private List<SpecialOffer> offers = new List<SpecialOffer>();
 
         public Restaurants() { }
         public Restaurants(string id, string n, string email)
@@ -62,7 +69,7 @@ namespace S10272516_PRG2Assignment
             if (o != null) OrderQueue.Enqueue(o);
         }
 
-        // +isplayMenu() : void
+        // +DisplayMenu() : void
         public void DisplayMenu()
         {
             if (menus.Count == 0)
