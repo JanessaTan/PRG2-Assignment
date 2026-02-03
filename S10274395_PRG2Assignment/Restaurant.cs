@@ -25,7 +25,7 @@ namespace S10272516_PRG2Assignment
         public string RestaurantEmail { get; set; }
 
         public List<Menu> Menus = new List<Menu>();
-        public Queue<Order> Orders = new Queue<Order>();
+        public List<Order> Orders = new List<Order>();
         public List<SpecialOffer> Offers = new List<SpecialOffer>();
 
         public Restaurants() { }

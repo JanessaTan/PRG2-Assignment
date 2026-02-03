@@ -61,7 +61,7 @@ namespace S10272516_PRG2Assignment
             foreach (Order o in Orders)
 
             {
-                if (o.OrderStatus = status)
+                if (o.OrderStatus == status)
                     list.Add(o);
             }
             return list;
