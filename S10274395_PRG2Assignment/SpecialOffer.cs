@@ -32,16 +32,7 @@ namespace S10272516_PRG2Assignment
 
         public override string ToString()
         {
-            return $"{offerCode} - {offerDesc} ({discount * 100:0.#} % off)"
-;
-        }
-
-        //
-        class SpecialOffers : SpecialOffer
-        {
-            public SpecialOffers() : base() { }
-            public SpecialOffers(string code, string desc, double discountPercent)
-                : base(code, desc, dicount) { }
+            return OfferCode + " - " + OfferDesc + " (" + (Discount * 100) + "% off)";
         }
     }
 }
