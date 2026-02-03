@@ -1,3 +1,4 @@
+using MyPRG2Final;
 using System;
 using System.Collections.Generic;
 
@@ -13,8 +14,8 @@ namespace S10272516_PRG2Assignment
     {
         void Run()
         {
-            
-            List<Restaurant> restaurantList = new List<Restaurant>();
+
+            List<Restaurants> restaurantList = new List<Restaurants>();
             List<Customer> customerList = new List<Customer>();
             List<Order> orderList = new List<Order>();
 
@@ -61,17 +62,17 @@ namespace S10272516_PRG2Assignment
         // ====================================================
         // FEATURE 3 : List Restaurants and Menu
         // ====================================================
-        void ListRestaurantsAndMenu(List<Restaurant> restaurantList)
+        void ListRestaurantsAndMenu(List<Restaurants> restaurantList)
         {
             Console.WriteLine("All Restaurants and Menu Items");
             Console.WriteLine("===============================");
 
             for (int i = 0; i < restaurantList.Count; i++)
             {
-                Restaurant r = restaurantList[i];
+                Restaurants r = restaurantList[i];
 
-                Console.WriteLine("Restaurant: " + r.restaurantName +
-                                  " (" + r.restaurantId + ")");
+                Console.WriteLine("Restaurant: " + r.RestaurantName +
+                                  " (" + r.RestaurantId + ")");
 
                 List<Menu> menuList = r.GetAllMenus();
 
@@ -100,12 +101,12 @@ namespace S10272516_PRG2Assignment
         }
 
         // ====================================================
-        // FEATURE 4 : List All Orders
+        // FEATURE  : List All Orders
         // ====================================================
         void ListAllOrders(
             List<Order> orderList,
             List<Customer> customerList,
-            List<Restaurant> restaurantList)
+            List<Restaurants> restaurantList)
         {
             Console.WriteLine("All Orders");
             Console.WriteLine("===========");
@@ -122,28 +123,29 @@ namespace S10272516_PRG2Assignment
                 // Find customer name
                 for (int j = 0; j < customerList.Count; j++)
                 {
-                    if (customerList[j].customerEmail == o.CustomerEmail)
+                    if (customerList[j].EmailAddr == o.CustomerEmail)
                     {
-                        customerName = customerList[j].customerName;
+                        customerName = customerList[j].CustomerName;
+                        break;
                     }
                 }
 
                 // Find restaurant name
                 for (int j = 0; j < restaurantList.Count; j++)
                 {
-                    if (restaurantList[j].restaurantId == o.RestaurantId)
+                    if (restaurantList[j].RestaurantId == o.RestaurantId)
                     {
-                        restaurantName = restaurantList[j].restaurantName;
+                        restaurantName = restaurantList[j].RestaurantName;
                     }
                 }
 
                 Console.WriteLine(
-                    o.orderId + "   " +
+                    o.OrderID + "   " +
                     customerName + "   " +
                     restaurantName + "   " +
-                    o.deliveryDateTime.ToString("dd/MM/yyyy HH:mm") + "   $" +
-                    o.orderTotal.ToString("0.00") + "   " +
-                    o.orderStatus
+                    o.DeliveryDateTime.ToString("dd/MM/yyyy HH:mm") + "   $" +
+                    o.OrderTotal.ToString("0.00") + "   " +
+                    o.OrderStatus
                 );
             }
         }
