@@ -24,7 +24,7 @@ namespace S10272516_PRG2Assignment
         public string RestaurantEmail { get; set; }
 
         private List<Menu> menus = new List<Menu>();
-        public Queu<Order> OrderQueue { get; } = new Queue<Order>();
+        public Queue<Order> OrderQueue { get; } = new Queue<Order>();
 
         // implements (SpecialOffer)
         private List<SpecialOffer> offers = new List<SpecialOffer>();
