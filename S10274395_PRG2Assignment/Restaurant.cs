@@ -23,64 +23,64 @@ namespace S10272516_PRG2Assignment
         public string RestaurantName { get; set; }
         public string RestaurantEmail { get; set; }
 
-        private List<Menu> menus = new List<Menu>();
-        public Queue<Order> OrderQueue { get; } = new Queue<Order>();
-
-        // implements (SpecialOffer)
-        private List<SpecialOffer> offers = new List<SpecialOffer>();
+        public List<Menu> Menus = new List<Menu>();
+        public Queue<Order> Orders = new List<Order>();
+        public List<SpecialOffer> Offers = new List<SpecialOffer>();
 
         public Restaurants() { }
         public Restaurants(string id, string n, string email)
         {
             restaurantId = id;
             restaurantName = n;
-            retaurantEmail = email;
+            restaurantEmail = email;
 
         }
 
-        public void AddMenu (Menu m)
+        public void AddMenu(Menu m)
         {
-            if (m != null) menus.Add(m);
+            if (m != null) Menus.Add(m);
         }
 
-        public bool RemoveMenu (Menu m)
+        public bool RemoveMenu(Menu m)
         {
-            return menus.Remove(m);
+            return Menus.Remove(m);
         }
 
         public List<Menu> GetAllMenus()
         {
-            return new List<Menu>(GetAllMenus);
+            return Menus;
         }
 
-        public void AddSpecialOffer (SpecialOffer offer)
+        public void AddSpecialOffer(SpecialOffer offer)
         {
-            if (offer != null) offers.Add(offer);
+            if (offer != null)
+                Offers.Add(offer);
         }
 
-        public List <SpecialOffer> GetAllOffers()
+        public List<SpecialOffer> GetAllOffers()
         {
-            return new List<SpecialOffer>(offers);
+            return Offers;
 
         }
 
-        public void EnqueueOrder(Order o)
+        public void AddOrder(Order o)
         {
-            if (o != null) OrderQueue.Enqueue(o);
+            if (o != null)
+                Orders.Add(o);
         }
 
         // +DisplayMenu() : void
         public void DisplayMenu()
         {
-            if (menus.Count == 0)
+            if (Menus.Count == 0)
             {
                 Console.WriteLine("(no menus)");
                 return;
             }
 
-            foreach (var m in menus)
+            foreach (var m in Menus)
             {
-                Console.WriteLine(m.ToString());
+                Console.WriteLine("Menu: " + m.MenuName);
                 m.DisplayFoodItems();
             }
         }
@@ -88,34 +88,33 @@ namespace S10272516_PRG2Assignment
         // +DisplayOrders() : void
         public void DisplayOrders()
         {
-            if (OrderQueue.Count == 0) { Console.WriteLine("(no orders)"); return; }
-            foreach (var o in OrderQueue)
+            if (Orders.Count == 0)
+            {
+                Console.WriteLine("(no orders)");
+                return;
+            }
+            foreach (var o in Orders)
                 Console.WriteLine(o.ToString());
         }
 
         // +DisplaySpecialOffers() :void 
         public void DisplaySpecialOffers()
         {
-            if (offers.Count == 0)
+            if (Offers.Count == 0)
             {
                 Console.WriteLine("(no special offers)");
                 return;
             }
 
-            foreach (var s in offers) Console.WriteLine(" - " +
-                s.ToString());
+            foreach (var s in Offers)
+                Console.WriteLine(" - " +s.ToString());
         }
 
         public override string ToString()
         {
-            return $"Restaurant : {restaurantName} (restaurantId}) - {restaurantEmail}";
+            return "Restaurant: " + RestaurantName + " (" + RestaurantId + ") - " + RestaurantEmail;
 
         }
-
-
-
-
-            
     }
 }
 

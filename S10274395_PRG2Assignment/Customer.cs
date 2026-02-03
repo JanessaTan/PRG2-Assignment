@@ -20,7 +20,7 @@ namespace S10272516_PRG2Assignment
         public string EmailAddr { get; set; }
         public string CustomerName { get; set; }
 
-        private List<Order> orders = new List<Order>();
+        public List<Order> Orders = new List<Order>();
 
         public Customer() { }
         public Customer(string emailAddr, string customer)
@@ -32,51 +32,50 @@ namespace S10272516_PRG2Assignment
         // +AddOrder(Order)
         public void AddOrder(Order o)
         {
-            if (o != null) orders.Add(o);
+            if (o != null)
+                Orders.Add(o);
         }
 
         // +DisplayAllOrders() 
-        public voide DisplayAllOrders()
+        public void DisplayAllOrders()
         {
-            if (orders.Count == 0)
+            if (Orders.Count == 0)
             {
                 Console.WriteLine("No orders.");
                 return;
             }
-            for each(Order o in orders) Console.WriteLine(o.ToString());
+            foreach (Order o in Orders)
+                Console.WriteLine(o.ToString());
         }
 
         // +RemoveOrder(Order) : bool
         public bool RemoveOrder(Order o)
         {
-            return DisplayAllOrders().Remove(o);
+            return Orders.Remove(o);
         }
 
         // Modify /Delete features 
         public List<Order> GetOrdersByStatus(string status)
         {
             List<Order> list = new List<Order>();
-            foreach (Order o in orders)
+            foreach (Order o in Orders)
 
             {
-                if (o.OrderStatus = status) list.Add(o);
+                if (o.OrderStatus = status)
+                    list.Add(o);
             }
             return list;
         }
 
         public List<Order> GetAllOrders()
         {
-            return new List<Order>(orders);
+            return Orders;
         }
 
         // +ToString():string
         public override string ToString()
         {
-            return $"{CustomerName} ({EmailAddress})";
+            return CustomerName +" (" + EmailAddr + ")";
         }
-
-
-        
     }
-
 }

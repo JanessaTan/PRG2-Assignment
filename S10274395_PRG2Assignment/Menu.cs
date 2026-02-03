@@ -14,55 +14,55 @@ namespace S10272516_PRG2Assignment
 {
 	class Menu
 	{
-		private string menuId;
-		private string menuName;
+        private string menuId;
+        private string menuName;
 
-		public string MenuId { get; set; }
-		public string MenuName { get; set; }
+        public string MenuId { get; set; }
+        public string MenuName { get; set; }
 
-		public string RestaurantId { get; set; }
+        public string RestaurantId { get; set; }
 
-		private List<FoodItem> items = new List<FoodItem> <FoodItem> ();
+        public List<FoodItem> items = new List<FoodItem>();
 
-		public Menu() { }
-		public Menu (string id, string name ,string restaurantId)
-		{
-			MenuId = id;
-			MenuName = name;
-			RestaurantId = reataurantId;
-		}
+        public Menu() { }
+        public Menu(string id, string name, string restaurantId)
+        {
+            MenuId = id;
+            MenuName = name;
+            RestaurantId = restaurantId;
+        }
 
-		public void AddFoodItem (FoodItem item)
-		{
-			if (item != null) items.Add(item);
-		}
+        public void AddFoodItem(FoodItem item)
+        {
+            if (item != null)
+                items.Add(item);
+        }
 
-		public bool RemoveFoodItme (FoodItem item)
-		{
-			return items.Remove(item);
-		}
+        public bool RemoveFoodItme(FoodItem item)
+        {
+            return items.Remove(item);
+        }
 
-		public void DisplayFoodItems()
-		{
-			if (items.Count == 0) 
-			{ 
-				Console.WriteLine("(no items)");
-				return;
-			}
+        public void DisplayFoodItems()
+        {
+            if (items.Count == 0)
+            {
+                Console.WriteLine("(no items)");
+                return;
+            }
 
-			foreach (var fi in items) Console.WriteLine(" - " +
-				fi.ToString());
-		}
+            foreach (var fi in items)
+                Console.WriteLine(" - " + fi.ToString());
+        }
 
-		public List<FoodItem> GetAllItems()
-		{
-			return new List<FoodItem>(items);
-		}
+        public List<FoodItem> GetAllItems()
+        {
+            return new List<FoodItem>(items);
+        }
 
-		public override string ToString()
-		{
-			return $"Menu: {MenuName} ({MenuId})";
-		}
-	}
-
+        public override string ToString()
+        {
+            return $"Menu: {MenuName} ({MenuId})";
+        }
+    }
 }

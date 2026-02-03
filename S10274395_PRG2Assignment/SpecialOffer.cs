@@ -14,9 +14,9 @@ namespace S10272516_PRG2Assignment
 {
     class SpecialOffer
     {
-        private string offerCode { get;set; }
-        private string offerDesc { get;set; }
-        private double discount { get;set; }
+        private string offerCode;
+        private string offerDesc;
+        private double discount;
 
         public string OfferCode  { get; set; }
         public string OfferDesc {  get; set; }
