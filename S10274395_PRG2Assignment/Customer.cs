@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace S10272516_PRG2Assignment
 {
-    public class Customer
+    class Customer
     {
         private string emailAddr;
         private string customerName;
