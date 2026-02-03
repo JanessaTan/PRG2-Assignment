@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace S10272516_PRG2Assignment
 {
+
     public class Restaurants
     {
         private string restaurantId;
