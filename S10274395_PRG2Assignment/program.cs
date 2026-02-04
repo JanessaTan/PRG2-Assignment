@@ -116,14 +116,15 @@ namespace S10272516_PRG2Assignment
             for (int i = 0; i < orderList.Count; i++)
             {
                 Order o = orderList[i];
-
-                string customerName = o.CustomerEmail;
-                string restaurantName = o.RestaurantId;
+                Customer c = customerList[i];
+                Restaurants r = restaurantList[i];
+                string customerName = c.CustomerEmail;
+                string restaurantName = r.RestaurantId;
 
                 // Find customer name
                 for (int j = 0; j < customerList.Count; j++)
                 {
-                    if (customerList[j].EmailAddr == o.CustomerEmail)
+                    if (customerList[j].EmailAddr == c.EmailAddr)
                     {
                         customerName = customerList[j].CustomerName;
                         break;
@@ -133,7 +134,7 @@ namespace S10272516_PRG2Assignment
                 // Find restaurant name
                 for (int j = 0; j < restaurantList.Count; j++)
                 {
-                    if (restaurantList[j].RestaurantId == o.RestaurantId)
+                    if (restaurantList[j].RestaurantId == r.RestaurantId)
                     {
                         restaurantName = restaurantList[j].RestaurantName;
                     }
