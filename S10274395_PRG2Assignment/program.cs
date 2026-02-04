@@ -118,7 +118,7 @@ namespace S10272516_PRG2Assignment
                 Order o = orderList[i];
                 Customer c = customerList[i];
                 Restaurants r = restaurantList[i];
-                string customerName = c.CustomerEmail;
+                string customerName = c.EmailAddr;
                 string restaurantName = r.RestaurantId;
 
                 // Find customer name
