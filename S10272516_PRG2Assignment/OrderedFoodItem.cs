@@ -21,7 +21,7 @@ namespace S10272516_PRG2Assignment
         public double SubTotal { get; set; }
 
         public OrderedFoodItem() : base() { }
-        public OrderedFoodItem(string n, string d, double p, string c, int q, double st) : base(n, d, p, c)
+        public OrderedFoodItem(string n, string d, double p, string? c, int q, double st) : base(n, d, p, c)
         {
             QtyOrdered = q;
             SubTotal = st;

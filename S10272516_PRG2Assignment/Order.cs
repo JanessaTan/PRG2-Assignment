@@ -32,7 +32,7 @@ namespace S10272516_PRG2Assignment
         public string OrderPaymentMethod { get; set; }
         public bool OrderPaid { get; set; }
         public List<OrderedFoodItem> OrderList { get; set; } = new List<OrderedFoodItem>();
-        public SpecialOffers Offer { get; set; }
+        public SpecialOffer Offer { get; set; }
 
         public Order() { }
 
@@ -46,7 +46,7 @@ namespace S10272516_PRG2Assignment
 
             if (Offer != null)
             {
-                total -= total * Offer.discount;
+                total -= total * Offer.Discount;
             }
 
             OrderTotal = total;
@@ -67,7 +67,7 @@ namespace S10272516_PRG2Assignment
         {
             for (int i = 0; i < OrderList.Count; i++)
             {
-                Console.WriteLine($"{i+1}. {OrderList[i].ItemName} - {OrderList[i].QtyOrdered}");
+                Console.WriteLine($"{i + 1}. {OrderList[i].ItemName} - {OrderList[i].QtyOrdered}");
             }
         }
 

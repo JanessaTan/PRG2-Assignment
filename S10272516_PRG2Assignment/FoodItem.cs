@@ -17,15 +17,15 @@ namespace S10272516_PRG2Assignment
         private string itemName;
         private string itemDesc;
         private double itemPrice;
-        private string customize;
+        private string? customize;
 
         public string ItemName { get; set; }
         public string ItemDesc { get; set; }
         public double ItemPrice { get; set; }
-        public string Customize { get; set; }
+        public string? Customize { get; set; }
 
         public FoodItem() { }
-        public FoodItem(string n, string d, double p, string c)
+        public FoodItem(string n, string d, double p, string? c)
         {
             ItemName = n;
             ItemDesc = d;
