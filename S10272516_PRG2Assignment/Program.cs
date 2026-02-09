@@ -6,12 +6,12 @@
 // Partner Name : Than Thar Wint Htal
 //==========================================================
 
-
 // ====================================================
 // FEATURE 1 : Load files (restaurants and food items)
 // By: Janessa
 // ====================================================
-Dictionary<string, Restaurants> restaurantDict = new Dictionary<string, Restaurants>();
+
+List<Restaurants> restaurantList = new List<Restaurants>();
 void InitializeRestaurants()
 {
     using (StreamReader sr = new StreamReader("restaurants.csv"))
@@ -21,15 +21,19 @@ void InitializeRestaurants()
         {
             string[] data = line.Split(",");
             string rID = data[0];
+            Console.WriteLine(rID);
             string rName = data[1];
+            Console.WriteLine(rName);
             string rEmail = data[2];
+            Console.WriteLine(rEmail);
             Restaurants r = new Restaurants(rID, rName, rEmail);
-            restaurantDict.Add(rID, r);
+            Console.WriteLine(r);
+            restaurantList.Add(r);
         }
     }
 }
 
-Dictionary<string, FoodItem> foodItemDict = new Dictionary<string, FoodItem>();
+List<FoodItem> foodItemList = new List<FoodItem>();
 void InitializeFoodItems()
 {
     using (StreamReader sr = new StreamReader("fooditems.csv"))
@@ -52,7 +56,7 @@ void InitializeFoodItems()
             }
             double fiPrice = Convert.ToDouble(data[data.Length - 1]);
             FoodItem fi = new FoodItem(fiName, fiDesc, fiPrice, null);
-            foodItemDict.Add(fiName, fi);
+            foodItemList.Add(fi);
         }
     }
 }
@@ -62,7 +66,7 @@ void InitializeFoodItems()
 // FEATURE 2 : Load files (customers and orders) [loading of orders is work in progress]
 // By: Janessa
 // ====================================================
-Dictionary<string, Customer> customerDict = new Dictionary<string, Customer>();
+List<Customer> customerList = new List<Customer>();
 void InitializeCustomers()
 {
     using (StreamReader sr = new StreamReader("customers.csv"))
@@ -74,12 +78,12 @@ void InitializeCustomers()
             string cName = data[0];
             string cEmail = data[1];
             Customer c = new Customer(cEmail, cName);
-            customerDict.Add(cEmail, c);
+            customerList.Add(c);
         }
     }
 }
 
-Dictionary<int, Order> orderDict = new Dictionary<int, Order>();
+List<Order> orderList = new List<Order>();
 void InitializeOrders()
 {
     //using (StreamReader sr = new StreamReader("orders.csv"))
@@ -131,13 +135,13 @@ void InitializeOrders()
 Console.WriteLine("Welcome to the Gruberoo Food Delivery System");
 
 InitializeRestaurants();
-Console.WriteLine($"{restaurantDict.Count} restaurants loaded!");
+Console.WriteLine($"{restaurantList.Count} restaurants loaded!");
 
 InitializeFoodItems();
-Console.WriteLine($"{foodItemDict.Count} food items loaded!");
+Console.WriteLine($"{foodItemList.Count} food items loaded!");
 
 InitializeCustomers();
-Console.WriteLine($"{customerDict.Count} customers loaded!");
+Console.WriteLine($"{customerList.Count} customers loaded!");
 
 InitializeOrders();
-Console.WriteLine($"{orderDict.Count} orders loaded! (WORK IN PROGRESS)");
+Console.WriteLine($"{orderList.Count} orders loaded! (WORK IN PROGRESS)");
