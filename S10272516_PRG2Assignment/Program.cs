@@ -21,13 +21,9 @@ void InitializeRestaurants()
         {
             string[] data = line.Split(",");
             string rID = data[0];
-            Console.WriteLine(rID);
             string rName = data[1];
-            Console.WriteLine(rName);
             string rEmail = data[2];
-            Console.WriteLine(rEmail);
             Restaurants r = new Restaurants(rID, rName, rEmail);
-            Console.WriteLine(r);
             restaurantList.Add(r);
         }
     }
