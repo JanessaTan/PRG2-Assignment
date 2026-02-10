@@ -14,6 +14,9 @@ namespace S10272516_S10274395_PRG2Assignment
 {
     class Customer
     {
+        private string emailAddr;
+        private string customerName;
+
         public string EmailAddr { get; set; }
         public string CustomerName { get; set; }
         public List<Order> Orders = new List<Order>();

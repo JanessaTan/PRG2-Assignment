@@ -14,6 +14,9 @@ namespace S10272516_S10274395_PRG2Assignment
 {
     class Menu
     {
+        private string menuId;
+        private string menuName;
+        private string restaurantId;
         public string MenuId { get; set; }
         public string MenuName { get; set; }
         public string RestaurantId { get; set; }

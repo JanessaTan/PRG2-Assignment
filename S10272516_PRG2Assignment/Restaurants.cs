@@ -15,6 +15,9 @@ namespace S10272516_S10274395_PRG2Assignment
 
     class Restaurants
     {
+        private string restaurantId;
+        private string restaurantName;
+        private string restaurantEmail;
         public string RestaurantId { get; set; }
         public string RestaurantName { get; set; }
         public string RestaurantEmail { get; set; }
