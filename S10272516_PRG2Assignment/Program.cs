@@ -786,7 +786,82 @@ class Program
     // ADVANCED (a) : Bulk processing of unprocessed orders for current day
     // By: Janessa
     // ====================================================
+    void BulkProcessOrders()
+    {
+        Console.WriteLine("Bulk Process Unprocessed Orders");
+        Console.WriteLine("============================");
 
+        DateTime now = DateTime.Now;
+        int totalPending = 0;
+        int processedCount = 0;
+        int preparingCount = 0;
+        int rejectedCount = 0;
+
+        totalPending = CountPending();
+        Console.WriteLine($"Total pending orders: {totalPending}");
+
+        foreach (Restaurants restaurant in restaurantDict.Values)
+        {
+            ProcessOrderInQueue(restaurant, now, ref processedCount, ref preparingCount, ref rejectedCount);
+        }
+
+        Console.WriteLine("\n=== Summary ===");
+        Console.WriteLine($"Orders processed: {processedCount}");
+        Console.WriteLine($"Preparing: {preparingCount}");
+        Console.WriteLine($"Rejected: {rejectedCount}");
+
+        double percentage = orderDict.Count > 0 ? (processedCount * 100.0 / orderDict.Count) : 0;
+        Console.WriteLine($"Percentage of automatically processed orders: {percentage:0.00}%");
+    }
+
+    int CountPending()
+    {
+        int count = 0;
+        foreach (Restaurants restaurant in restaurantDict.Values)
+        {
+            foreach (Order order in restaurant.Orders)
+            {
+                if (order.OrderStatus == "Pending")
+                    count++;
+            }
+        }
+        return count;
+    }
+
+    void ProcessOrderInQueue(Restaurants restaurant, DateTime now,
+                                    ref int processedCount, ref int preparingCount, ref int rejectedCount)
+    {
+        Queue<Order> queue = restaurant.Orders;
+        int queueSize = queue.Count;
+
+        for (int i = 0; i < queueSize; i++)
+        {
+            Order order = queue.Dequeue();
+
+            if (order.OrderStatus == "Pending")
+            {
+                TimeSpan timeUntilDelivery = order.DeliveryDateTime - now;
+
+                if (timeUntilDelivery.TotalHours < 1)
+                {
+                    order.OrderStatus = "Rejected";
+                    refundStack.Push(order);
+                    rejectedCount++;
+                    processedCount++;
+                    Console.WriteLine($"Order {order.OrderID} rejected (delivery time < 1 hour)");
+                }
+                else
+                {
+                    order.OrderStatus = "Preparing";
+                    preparingCount++;
+                    processedCount++;
+                    Console.WriteLine($"Order {order.OrderID} set to Preparing");
+                }
+            }
+
+            queue.Enqueue(order);
+        }
+    }
 
     // ====================================================
     // ADVANCED (b) : Display total order amount & Gruberoo earnings
