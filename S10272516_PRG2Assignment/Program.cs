@@ -114,11 +114,65 @@ class Program
 
     // ====================================================
     // FEATURE 1 : Load files (restaurants and food items)
+    // By: Janessa
     // ====================================================
+    void InitializeRestaurants()
+    {
+        using (StreamReader sr = new StreamReader("restaurants.csv"))
+        {
+            string? line = sr.ReadLine();
+            while ((line = sr.ReadLine()) != null)
+            {
+                string[] data = line.Split(",");
+                string rID = data[0];
+                string rName = data[1];
+                string rEmail = data[2];
+                Restaurants r = new Restaurants(rID, rName, rEmail);
+                restaurantDict.Add(rID, r);
+                Menu defaultMenu = new Menu($"M-{rID}", "Default Menu", rID);
+                r.AddMenu(defaultMenu);
+            }
+        }
+    }
 
+    void InitializeFoodItems()
+    {
+        using (StreamReader sr = new StreamReader("fooditems.csv"))
+        {
+            string? line = sr.ReadLine();
+            while ((line = sr.ReadLine()) != null)
+            {
+                string[] data = line.Split(",");
+                string rID = data[0];
+                string fiName = data[1];
+                string fiDesc = data[2];
+                string descOrPrice = "";
+                for (int i = 3; i < (data.Length - 1); i++)
+                {
+                    descOrPrice += data[i];
+                    if (i < data.Length - 1)
+                    {
+                        descOrPrice += ", ";
+                    }
+                }
+                double fiPrice = Convert.ToDouble(data[data.Length - 1]);
+
+                FoodItem fi = new FoodItem(fiName, fiDesc, fiPrice, null);
+                itemDict.Add(fiName, fi);
+
+                if (restaurantDict.ContainsKey(rID))
+                {
+                    List<Menu> menus = restaurantDict[rID].GetAllMenus();
+                    if (menus.Count > 0)
+                        menus[0].AddFoodItem(fi);
+                }
+            }
+        }
+    }
 
     // ====================================================
     // FEATURE 2 : Load files (customers and orders)
+    // By: Than
     // ====================================================
     void InitializeCustomers()
     {
@@ -232,6 +286,7 @@ class Program
 
     // ====================================================
     // FEATURE 3 : List Restaurants and Menu
+    // By: Than
     // ====================================================
     void ListRestaurantsAndMenu()
     {
@@ -267,11 +322,36 @@ class Program
 
     // ====================================================
     // FEATURE 4 : List All Orders
+    // By: Janessa
     // ====================================================
+    void ListAllOrders()
+    {
+        Console.WriteLine("All Orders");
+        Console.WriteLine("==========");
+        Console.WriteLine($"{"Order ID",-10} {"Customer",-15} {"Restaurant",-20} {"Delivery Date/Time",-20} {"Amount",-10} {"Status",-12}");
+        Console.WriteLine($"{new string('-', 8)} {new string('-', 15)} {new string('-', 20)} {new string('-', 20)} {new string('-', 10)} {new string('-', 12)}");
 
+        foreach (int orderId in orderDict.Keys.OrderBy(k => k))
+        {
+            Order order = orderDict[orderId];
+            ShowOrder(order);
+        }
+
+        Console.WriteLine();
+    }
+
+    void ShowOrder(Order order)
+    {
+        string custName = FindCustomerName(order.OrderID);
+        string restName = FindRestaurantName(order.OrderID);
+
+        Console.WriteLine($"{order.OrderID,-10} {ShortenText(custName, 15),-15} {ShortenText(restName, 20),-20} " +
+                        $"{String.Format("{0,-20}", order.DeliveryDateTime.ToString("dd/MM/yyyy HH:mm"))} ${order.OrderTotal,-9:0.00} {order.OrderStatus,-12}");
+    }
 
     // ====================================================
     // FEATURE 5 : Create a new order
+    // By: Than
     // ====================================================
     void CreateNewOrder()
     {
@@ -396,11 +476,13 @@ class Program
 
     // ====================================================
     // FEATURE 6 : Process an order (per restaurant queue)
+    // By: Janessa
     // ====================================================
 
 
     // ====================================================
     // FEATURE 7 : Modify an existing order (Pending only)
+    // By: Than
     // ====================================================
     void ModifyOrder()
     {
@@ -565,15 +647,18 @@ class Program
 
     // ====================================================
     // FEATURE 8 : Delete an existing order (Pending → Cancelled + refund)
+    // By: Janessa
     // ====================================================
 
     // ====================================================
     // ADVANCED (a) : Bulk processing of unprocessed orders for current day
+    // By: Janessa
     // ====================================================
 
 
     // ====================================================
     // ADVANCED (b) : Display total order amount & Gruberoo earnings
+    // By: Than
     // ====================================================
 
     void Advanced_DisplayTotalsAndEarnings()
@@ -622,6 +707,8 @@ class Program
         double gruberooEarns = overallDeliveredLessDelivery * PlatformFeeRate;
         Console.WriteLine($"Final amount Gruberoo earns (30%): ${gruberooEarns:0.00}");
     }
+
+    // The methods below are a team effort
 
     // ====================================================
     // Exit: Save Queue & Stack to NEW files
