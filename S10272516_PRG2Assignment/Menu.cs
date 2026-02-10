@@ -4,6 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//==========================================================
+// Student Number : S10274395
+// Student Name : Than Thar Wint Htal
+// Partner Name : Janessa Tan Jia En
+//========================================================== 
+
 namespace S10272516_S10274395_PRG2Assignment
 {
     class Menu
