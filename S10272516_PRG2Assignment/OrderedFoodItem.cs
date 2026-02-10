@@ -29,7 +29,7 @@ namespace S10272516_S10274395_PRG2Assignment
 
         public double CalculateSubtotal()
         {
-            return QtyOrdered * itemPrice;
+            return QtyOrdered * ItemPrice;
         }
     }
 }
