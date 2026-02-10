@@ -24,6 +24,7 @@ void InitializeRestaurants()
             string rName = data[1];
             string rEmail = data[2];
             Restaurants r = new Restaurants(rID, rName, rEmail);
+            Console.WriteLine(r.RestaurantId, r.RestaurantName, r.RestaurantEmail);
             restaurantList.Add(r);
         }
     }
@@ -82,49 +83,61 @@ void InitializeCustomers()
 List<Order> orderList = new List<Order>();
 void InitializeOrders()
 {
-    //using (StreamReader sr = new StreamReader("orders.csv"))
-    //{
-    //    string? line = sr.ReadLine();
-    //    while ((line = sr.ReadLine()) != null)
-    //    {
-    //        string[] data = line.Split(",");
-    //        int oID = Convert.ToInt32(data[0]);
-    //        string cEmail = data[1];
-    //        string rID = data[2];
-    //        DateOnly oDeliveryDate = DateOnly.Parse(data[3]);
-    //        TimeOnly oDeliveryTime = TimeOnly.Parse(data[4]);
-    //        DateTime oDeliveryDateTime = new DateTime(oDeliveryDate, oDeliveryTime);
-    //        string oDeliveryAddress = data[5];
-    //        DateTime oDateTime = Convert.ToDateTime(data[6]);
-    //        double oTotal = Convert.ToDouble(data[7]);
-    //        string oStatus = data[8];
-    //        string foodData = "";
-    //        for (int i = 9; i < data.Length; i++)
-    //        {
-    //            foodData += data[i];
-    //            if (i < data.Length - 1)
-    //            {
-    //                foodData += ",";
-    //            }
-    //        }
+    using (StreamReader sr = new StreamReader("orders.csv"))
+    {
 
-    //        string[] foodItems = foodData.Split('|');
-    //        string fNames = "";
-    //        for (int i = 0; i < foodItems.Count(); i++)
-    //        {
-    //            string[] foodAndQuantity = foodItems[i].Split(",");
-    //            string fName = foodAndQuantity[0].TrimStart('\"');
-    //            fNames += (fName + " ");
-    //            int fQty = Convert.ToInt32(foodAndQuantity[1].TrimEnd('\"'));
-    //            Console.WriteLine(fNames);
-    //            Order o = new Order();
-    //            FoodItem fi = foodItemDict[fName];
-    //            OrderedFoodItem ofi = new OrderedFoodItem(fNames, fi.ItemDesc, fi.ItemPrice, null, fQty, oTotal);
-    //            o.AddOrderedFoodItem(ofi);
-    //            orderDict.Add(oID, o);
-    //        }
-    //    }
-    //}
+        string? line = sr.ReadLine();
+        while ((line = sr.ReadLine()) != null)
+        {
+            string[] data = line.Split(",");
+            int oID = Convert.ToInt32(data[0]);
+            string cEmail = data[1];
+            string rID = data[2];
+            DateOnly oDeliveryDate = DateOnly.Parse(data[3]);
+            TimeOnly oDeliveryTime = TimeOnly.Parse(data[4]);
+            DateTime oDeliveryDateTime = new DateTime(oDeliveryDate, oDeliveryTime);
+            string oDeliveryAddress = data[5];
+            DateTime oDateTime = Convert.ToDateTime(data[6]);
+            double oTotal = Convert.ToDouble(data[7]);
+            string oStatus = data[8];
+            string foodDatas = "";
+            int foodQty = 0;
+            string[] foodNameQty;
+            int firstQuote = line.IndexOf('"');
+            string[] foodData;
+
+            if (firstQuote != -1)
+            {
+                foodDatas = line.Substring(firstQuote + 1, line.Length - firstQuote - 2);
+                foodData = foodDatas.Split("|");
+
+                foreach (var itm in foodData)
+                {
+                    foodNameQty = itm.Split(",");
+                    string foodName = foodNameQty[0].Trim();
+                    if (foodNameQty.Count() > 1)
+                    {
+                        foodQty = Convert.ToInt32(foodNameQty[1].Trim());
+                    }
+                    else
+                    {
+                        foodQty = 1;
+                    }
+                    Order o = new Order();
+                    OrderedFoodItem ofi = new OrderedFoodItem(foodName, null, 0, null, foodQty, o.CalculateOrderTotal()); // CHANGE!!!
+                    o.AddOrderedFoodItem(ofi);
+                    orderList.Add(o);
+                }
+            }
+
+            //    Order o = new Order();
+            //    FoodItem fi = foodItemDict[fName];
+            //    OrderedFoodItem ofi = new OrderedFoodItem(fNames, fi.ItemDesc, fi.ItemPrice, null, fQty, oTotal);
+            //    o.AddOrderedFoodItem(ofi);
+            //    orderDict.Add(oID, o);
+            //}
+        }
+    }
 }
 
 
