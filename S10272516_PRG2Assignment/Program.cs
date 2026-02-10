@@ -30,7 +30,7 @@ void InitializeRestaurants()
     }
 }
 
-List<FoodItem> foodItemList = new List<FoodItem>();
+Dictionary<string, FoodItem> itemDict = new Dictionary<string, FoodItem>();
 void InitializeFoodItems()
 {
     using (StreamReader sr = new StreamReader("fooditems.csv"))
@@ -53,7 +53,7 @@ void InitializeFoodItems()
             }
             double fiPrice = Convert.ToDouble(data[data.Length - 1]);
             FoodItem fi = new FoodItem(fiName, fiDesc, fiPrice, null);
-            foodItemList.Add(fi);
+            itemDict.Add(fiName, fi);
         }
     }
 }
@@ -124,22 +124,16 @@ void InitializeOrders()
                         foodQty = 1;
                     }
                     Order o = new Order();
-                    OrderedFoodItem ofi = new OrderedFoodItem(foodName, null, 0, null, foodQty, o.CalculateOrderTotal()); // CHANGE!!!
+                    FoodItem itemInfo = itemDict[foodName];
+                    OrderedFoodItem ofi = new OrderedFoodItem(foodName, itemInfo.ItemDesc, itemInfo.ItemPrice,
+                        null, foodQty, oTotal);
                     o.AddOrderedFoodItem(ofi);
                     orderDict.Add(oID, o);
                 }
             }
-
-            //    Order o = new Order();
-            //    FoodItem fi = foodItemDict[fName];
-            //    OrderedFoodItem ofi = new OrderedFoodItem(fNames, fi.ItemDesc, fi.ItemPrice, null, fQty, oTotal);
-            //    o.AddOrderedFoodItem(ofi);
-            //    orderDict.Add(oID, o);
-            //}
         }
     }
 }
-
 
 Console.WriteLine("Welcome to the Gruberoo Food Delivery System");
 
@@ -147,7 +141,7 @@ InitializeRestaurants();
 Console.WriteLine($"{restaurantDict.Count} restaurants loaded!");
 
 InitializeFoodItems();
-Console.WriteLine($"{foodItemList.Count} food items loaded!");
+Console.WriteLine($"{itemDict.Count} food items loaded!");
 
 InitializeCustomers();
 Console.WriteLine($"{customerDict.Count} customers loaded!");
