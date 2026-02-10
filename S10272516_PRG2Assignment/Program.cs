@@ -91,7 +91,7 @@ class Program
                         DeleteOrder();
                         break;
                     case "7":
-                        Advanced_BulkProcessTodayPending();
+                        BulkProcessOrders();
                         break;
                     case "8":
                         Advanced_DisplayTotalsAndEarnings();
@@ -158,7 +158,7 @@ class Program
                 double fiPrice = Convert.ToDouble(data[data.Length - 1]);
 
                 FoodItem fi = new FoodItem(fiName, fiDesc, fiPrice, null);
-                itemDict.Add(fiName, fi);
+                foodItemByName.Add(fiName, fi);
 
                 if (restaurantDict.ContainsKey(rID))
                 {
@@ -345,7 +345,7 @@ class Program
         string custName = FindCustomerName(order.OrderID);
         string restName = FindRestaurantName(order.OrderID);
 
-        Console.WriteLine($"{order.OrderID,-10} {ShortenText(custName, 15),-15} {ShortenText(restName, 20),-20} " +
+        Console.WriteLine($"{order.OrderID,-10} {custName,-15} {restName,-20} " +
                         $"{String.Format("{0,-20}", order.DeliveryDateTime.ToString("dd/MM/yyyy HH:mm"))} ${order.OrderTotal,-9:0.00} {order.OrderStatus,-12}");
     }
 
@@ -960,11 +960,11 @@ class Program
         bool inQuotes = false;
 
         var cur = new System.Text.StringBuilder();
-        foreach (char ch in line)
+        foreach (char ch in Line)
         {
             if (ch == '"')
             {
-                inQuotes = 1 inQuotes;
+                inQuotes = true;
                 continue;
             }
 
@@ -1316,6 +1316,95 @@ class Program
             : (s.Substring(0, len - 1) + "…");
     }
 
+    // =======================================
+    // Search For Customer Name (if exists)
+    // =======================================
+    string FindCustomerName(int orderId)
+    {
+        if (orderToCustomerEmail.ContainsKey(orderId))
+        {
+            string email = orderToCustomerEmail[orderId];
+            if (customerDict.ContainsKey(email))
+                return customerDict[email].CustomerName;
+        }
+        return "Unknown";
+    }
+
+    // =======================================
+    // Search For Restaurant Name (if exists)
+    // =======================================
+    string FindRestaurantName(int orderId)
+    {
+        if (orderToRestaurantId.ContainsKey(orderId))
+        {
+            string id = orderToRestaurantId[orderId];
+            if (restaurantDict.ContainsKey(id))
+                return restaurantDict[id].RestaurantName;
+        }
+        return "Unknown";
+    }
+
+    // ============================================
+    // Get Input, Trim, With Input Validation
+    // ============================================
+    string AskForInput(string prompt)
+    {
+        while (true)
+        {
+            Console.Write(prompt);
+            string? input = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(input))
+                return input.Trim();
+            Console.WriteLine("Input cannot be empty. Please try again.");
+        }
+    }
+
+    // ================================================
+    // Return Number Input, Trim, With Input Validation
+    // ================================================
+    int AskForNumber(string prompt, int min = int.MinValue, int max = int.MaxValue)
+    {
+        while (true)
+        {
+            Console.Write(prompt);
+            string? input = Console.ReadLine();
+            if (int.TryParse(input, out int value) && value >= min && value <= max)
+                return value;
+            Console.WriteLine($"Please enter a valid number between {min} and {max}.");
+        }
+    }
+
+    // ================================================
+    // Return True/False For Y/N, With Input Validation 
+    // ================================================
+    bool AskYesOrNo(string prompt)
+    {
+        while (true)
+        {
+            Console.Write(prompt);
+            string? input = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(input)) continue;
+
+            string answer = input.Trim().ToUpper();
+            if (answer == "Y") return true;
+            if (answer == "N") return false;
+
+            Console.WriteLine("Please enter Y or N.");
+        }
+    }
+
+    // ============================================
+    // Search For Order And Return It (if exists)
+    // ============================================
+    Order? FindOrderInList(List<Order> orders, int orderId)
+    {
+        foreach (Order order in orders)
+        {
+            if (order.OrderID == orderId)
+                return order;
+        }
+        return null;
+    }
 }
 
 
