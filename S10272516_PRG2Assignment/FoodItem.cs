@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 // Partner Name : Than Thar Wint Htal
 //========================================================== 
 
-namespace S10272516_PRG2Assignment
+namespace S10272516_S10274395_PRG2Assignment
 {
     class FoodItem
     {
