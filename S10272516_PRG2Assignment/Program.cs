@@ -11,7 +11,7 @@
 // By: Janessa
 // ====================================================
 
-List<Restaurants> restaurantList = new List<Restaurants>();
+Dictionary<string, Restaurants> restaurantDict = new Dictionary<string, Restaurants>();
 void InitializeRestaurants()
 {
     using (StreamReader sr = new StreamReader("restaurants.csv"))
@@ -25,7 +25,7 @@ void InitializeRestaurants()
             string rEmail = data[2];
             Restaurants r = new Restaurants(rID, rName, rEmail);
             Console.WriteLine(r.RestaurantId, r.RestaurantName, r.RestaurantEmail);
-            restaurantList.Add(r);
+            restaurantDict.Add(rID, r);
         }
     }
 }
@@ -63,7 +63,7 @@ void InitializeFoodItems()
 // FEATURE 2 : Load files (customers and orders) [loading of orders is work in progress]
 // By: Janessa
 // ====================================================
-List<Customer> customerList = new List<Customer>();
+Dictionary<string, Customer> customerDict = new Dictionary<string, Customer>();
 void InitializeCustomers()
 {
     using (StreamReader sr = new StreamReader("customers.csv"))
@@ -75,12 +75,12 @@ void InitializeCustomers()
             string cName = data[0];
             string cEmail = data[1];
             Customer c = new Customer(cEmail, cName);
-            customerList.Add(c);
+            customerDict.Add(cEmail, c);
         }
     }
 }
 
-List<Order> orderList = new List<Order>();
+Dictionary<int, Order> orderDict = new Dictionary<int, Order>();
 void InitializeOrders()
 {
     using (StreamReader sr = new StreamReader("orders.csv"))
@@ -126,7 +126,7 @@ void InitializeOrders()
                     Order o = new Order();
                     OrderedFoodItem ofi = new OrderedFoodItem(foodName, null, 0, null, foodQty, o.CalculateOrderTotal()); // CHANGE!!!
                     o.AddOrderedFoodItem(ofi);
-                    orderList.Add(o);
+                    orderDict.Add(oID, o);
                 }
             }
 
@@ -144,13 +144,13 @@ void InitializeOrders()
 Console.WriteLine("Welcome to the Gruberoo Food Delivery System");
 
 InitializeRestaurants();
-Console.WriteLine($"{restaurantList.Count} restaurants loaded!");
+Console.WriteLine($"{restaurantDict.Count} restaurants loaded!");
 
 InitializeFoodItems();
 Console.WriteLine($"{foodItemList.Count} food items loaded!");
 
 InitializeCustomers();
-Console.WriteLine($"{customerList.Count} customers loaded!");
+Console.WriteLine($"{customerDict.Count} customers loaded!");
 
 InitializeOrders();
-Console.WriteLine($"{orderList.Count} orders loaded! (WORK IN PROGRESS)");
+Console.WriteLine($"{orderDict.Count} orders loaded! (WORK IN PROGRESS)");
